@@ -42,12 +42,14 @@ public class db_driver {
      * @return Connection
      */
     public static Connection getConnection() {
-        if (mConn != null) {
+        if (mConn == null) {
             try {
-                Class.forName("com.jdbc.mysql.DriverManager");
+                Class.forName("com.mysql.jdbc.Driver");
                 mConn = DriverManager.getConnection(mUrl, mUsername, mPassword);
             } catch (ClassNotFoundException | SQLException ex) {
                 Logger.getLogger(db_driver.class.getName()).log(Level.SEVERE, null, ex);
+            } finally{
+                System.out.println("Yeay");
             }
             return mConn;
         }
