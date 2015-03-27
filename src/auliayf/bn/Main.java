@@ -3,8 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package auliayf.bn;
+
+import auliayf.bn.libs.db;
+import auliayf.bn.libs.db_driver;
+import auliayf.bn.libs.db_model;
+import auliayf.bn.libs.db_query;
+import java.util.ArrayList;
 
 /**
  *
@@ -17,6 +22,18 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
+        db_driver driver = new db_driver("jdbc:mysql://localhost:3306/inventoris", "root", "root");
+        db_driver.getConnection();
+
+        db_query query = new db_query("users");
+        db mDb = new db();
+        ArrayList<db_model> records = mDb.get(query.toString()).result();
+
+        for (db_model record : records) {
+            System.out.println("username=" + record.get("username")
+                    + ", password=" + record.get("password")
+                    + ", nama lengkap=" + record.get("nama_lengkap"));
+        }
     }
 
     /**
