@@ -18,6 +18,7 @@ public class db_query {
     private String mTable;
     private final ArrayList<String> mSelects = new ArrayList<>();
     private final ArrayList<String[]> mWheres = new ArrayList<>();
+    private final ArrayList<String[]> mJoins = new ArrayList<String[]>();
 
     /**
      * Constructor and Setter for table name
@@ -135,6 +136,11 @@ public class db_query {
         return this;
     }
 
+    public db_query join(String table, String on, String type) {
+        this.mJoins.add(new String[]{type, table, on});
+        return this;
+    }
+
     /**
      * Permits you to write the WHERE portion of your query
      *
@@ -184,6 +190,19 @@ public class db_query {
             builder.append(" FROM ").append(this.mTable);
         } else {
             builder.append("SELECT * FROM ").append(this.mTable);
+        }
+
+        if (this.mJoins.size() > 0) {
+            for (String[] join : this.mJoins) {
+                if (join[0].length() > 0) {
+                    builder.append(" ");
+                    builder.append(join[0]);
+                }
+                builder.append(" JOIN ");
+                builder.append(join[1]);
+                builder.append(" ON ");
+                builder.append(join[2]);
+            }
         }
 
         if (this.mWheres.size() > 0) {
