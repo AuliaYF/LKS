@@ -136,6 +136,14 @@ public class db_query {
         return this;
     }
 
+    /**
+     * Permits you to write the JOIN portion of your query
+     *
+     * @param table Relation Table
+     * @param on On Parameter
+     * @param type Left/Right/etc
+     * @return db_query
+     */
     public db_query join(String table, String on, String type) {
         this.mJoins.add(new String[]{type, table, on});
         return this;
